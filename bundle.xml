@@ -1,0 +1,57 @@
+<?document type="cbunxml" version="1.0" ?>
+<bundle name="KeyenceDevices" version="0.1.6">
+    <label>Keyence Devices</label>
+    <author>Kassow Robots</author>
+    <description>Provides control of Keyence camera systems</description>
+    <dependencies>
+        <dep type="kr.system.api" id="libkr2_rc_api" ver="1.0" />
+        <dep type="kr.system.api" id="libkr2_program_api" ver="1.0" />
+        <dep type="kr.system.api" id="libkr2_spawner_api" ver="1.0" />
+        <dep type="kr.system.api" id="libkr2_io_api" ver="1.0" />
+        <!-- <dep type="os.lib" id="" ver="1.0" /> -->
+    </dependencies>
+    <class name="kswx_keyence_devices::KeyenceCamera" base="kr2_bundle_api::CustomDevice" instance_prefix="KEYENCE">
+        <label>Keyence Camera</label>
+        <description>Control Cbun module for the Keyence camera systems.</description>
+        <include>keyence_devices/keyence_camera.h</include>
+        <config>
+            <param name="keyence_ip_address" type="string">
+                <label>Keyence IP Address</label>
+                <default>192.168.0.10</default>
+            </param>
+            <param name="keyence_port" type="string">
+                <label>Keyence Port</label>
+                <default>8500</default>
+            </param>
+        </config>
+        <method name="triggerImage" xmlrpc="false">
+            <label>TriggerImage</label>
+            <description>Calls the trigger command.</description>
+        </method>
+        <method name="triggerImageObj" xmlrpc="false">
+            <label>TriggerImageObj</label>
+            <description>Calls the trigger command and return the response from the cam.</description>
+            <param name="object_found" type="Number">
+                <label>Command response</label>
+                <type_label>Number REF</type_label>
+            </param>
+        </method>
+        <method name="getObjectPose" xmlrpc="false">
+            <label>GetObjectPose</label>
+            <description>Returns the pose of recently found object.</description>
+            <param name="object_pose" type="RobotPose">
+                <label>Object Pose</label>
+                <type_label>RobotPose REF</type_label>
+            </param>
+            <param name="pose_type" type="int">
+                <label>Pose type</label>
+                <range>
+                    <item name="Approach position">0</item>
+                    <item name="Grip position">1</item>
+                    <item name="Place position">2</item>
+                </range>
+                <default>0</default>
+            </param>
+        </method>
+    </class>
+</bundle>
